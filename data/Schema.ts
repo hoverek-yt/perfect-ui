@@ -7,10 +7,19 @@ export class Schema<T extends Record<string, Field>> {
     this._fields = fields;
   }
 
-  isFullyValid(target: object): boolean {
-    for (const key in target) {}
+  validate(target: object): boolean {
+    const schemaKeys = new Set(Object.keys(this._fields));
+    const targetKeys = new Set(Object.keys(target));
 
-    return false;
+    schemaKeys.forEach(schemaKey => {
+      if (!targetKeys.has(schemaKey)) {
+        return false;
+      } else {
+        return this._fields[schemaKey].validate(target[schemaKey]);
+      }
+    });
+
+    return true;
   }
 }
 
