@@ -1,7 +1,9 @@
-export class Schema {
-  private _fields: [];
+import { Field } from "../field/Field";
 
-  constructor(...fields: []) {
-    
+export class Schema<T extends Record<string, Field>> {
+  private _fields: T = {};
+
+  constructor(fields: T) {
+    this._fields = fields;
   }
 }
