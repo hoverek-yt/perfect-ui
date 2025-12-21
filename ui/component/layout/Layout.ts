@@ -1,3 +1,3 @@
-import { Component } from "../component/Component";
+import { Component } from "../Component";
 
 export abstract class Layout extends Component<HTMLElement> { }
