@@ -19,7 +19,7 @@ export abstract class Emitter {
     return this;
   }
 
-  public off(event: string, handler: EmitterEventHandler) {
+  public off(event: string, handler: EmitterEventHandler): boolean {
     const handlers = this.eventMap.get(event);
     const handlerIndex = handlers.indexOf(handler);
 
