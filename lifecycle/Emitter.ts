@@ -1,40 +1,47 @@
-export type EmitterEventHandler<D> = (data: D) => void;
+export type EventMap = Record<string | symbol, any>;
 
-export class Emitter<EmitterEventHandlerDataMap> {
-  private _eventMap: Map<keyof EmitterEventHandlerDataMap, EmitterEventHandler<EmitterEventHandlerDataMap[keyof EmitterEventHandlerDataMap]>[]> = new Map();
+export class Emitter<M extends EventMap> {
+  private handlers: {
+    [K in keyof M]?: Set<(data: M[K]) => void>;
+  } = {};
 
-  private ensureEventArrayExists(event: keyof EmitterEventHandlerDataMap) {
-    if (!this._eventMap.has(event)) {
-      this._eventMap.set(event, []);
+  on<K extends keyof M>(
+    event: K,
+    handler: (data: M[K]) => void
+  ): () => void {
+    (this.handlers[event] ??= new Set()).add(handler);
+    return () => this.off(event, handler);
+  }
+
+  once<K extends keyof M>(
+    event: K,
+    handler: (data: M[K]) => void
+  ) {
+    const off = this.on(event, (data) => {
+      off();
+      handler(data);
+    });
+  }
+
+  off<K extends keyof M>(
+    event: K,
+    handler: (data: M[K]) => void
+  ): boolean {
+    return this.handlers[event]?.delete(handler) ?? false;
+  }
+
+  emit<K extends keyof M>(event: K, data: M[K]) {
+    const snapshot = this.handlers[event];
+    if (!snapshot) return;
+
+    // snapshot zabezpiecza przed modyfikacją w trakcie emit
+    for (const handler of [...snapshot]) {
+      handler(data);
     }
   }
 
-  public on<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>) {
-    this.ensureEventArrayExists(event);
-
-    this._eventMap.get(event).push(handler);
-    return this;
-  }
-
-  public off<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>): boolean {
-    this.ensureEventArrayExists(event);
-
-    const handlers = this._eventMap.get(event);
-    const handlerIndex = handlers.indexOf(handler);
-
-    if (handlerIndex > -1) {
-      handlers.splice(handlerIndex, 1);
-
-      return true;
-    }
-
-    return false;
-  }
-
-  public emit<K extends keyof EmitterEventHandlerDataMap>(event: K, data: EmitterEventHandlerDataMap[K]) {
-    const handlers = this._eventMap.get(event);
-    if (!handlers) return;
-
-    handlers.forEach(handler => handler(data));
+  clear<K extends keyof M>(event?: K) {
+    if (event) this.handlers[event]?.clear();
+    else this.handlers = {};
   }
 }
