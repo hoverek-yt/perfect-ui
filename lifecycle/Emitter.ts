@@ -1,7 +1,7 @@
 export type EmitterEventHandler<D> = (data: D) => void;
 
-export abstract class Emitter {
-  private _eventMap: Map<string, EmitterEventHandler<any>[]> = new Map();
+export class Emitter<EmitterEventHandlerDataMap> {
+  private _eventMap: Map<string, EmitterEventHandler<EmitterEventHandlerDataMap[keyof EmitterEventHandlerDataMap]>[]> = new Map();
   public get eventMap() {
     return this._eventMap;
   }
@@ -12,14 +12,14 @@ export abstract class Emitter {
     }
   }
 
-  public on<D>(event: string, handler: EmitterEventHandler<D>) {
+  public on<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>) {
     this.ensureEventArrayExists(event);
 
     this.eventMap.get(event).push(handler);
     return this;
   }
 
-  public off<D>(event: string, handler: EmitterEventHandler<D>): boolean {
+  public off<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>): boolean {
     this.ensureEventArrayExists(event);
 
     const handlers = this.eventMap.get(event);
@@ -32,5 +32,12 @@ export abstract class Emitter {
     }
 
     return false;
+  }
+
+  public emit<K extends keyof EmitterEventHandlerDataMap>(event: K, data: EmitterEventHandlerDataMap[K]) {
+    this.ensureEventArrayExists(event);
+
+    const handlers = this.eventMap.get(event);
+    handlers.forEach(handler => handler(data));
   }
 }
