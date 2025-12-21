@@ -1,6 +1,6 @@
-type EventMap = Record<string | symbol, any>;
+export type EventMap = Record<string | symbol, any>;
 
-class HandlerNode<D> {
+export class HandlerNode<D> {
   fn!: (data: D) => void;
   next: HandlerNode<D> | null = null;
   active = true;
