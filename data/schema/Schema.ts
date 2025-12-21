@@ -8,6 +8,10 @@ export class Schema<T extends Record<string, Field>> {
   }
 
   validate(target: object): boolean {
+    for (const key in target) {
+
+    }
+
     return false;
   }
 }
