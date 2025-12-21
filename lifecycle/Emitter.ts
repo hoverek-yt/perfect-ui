@@ -25,7 +25,7 @@ export class Emitter<EmitterEventHandlerDataMap> {
     const handlers = this.eventMap.get(event);
     const handlerIndex = handlers.indexOf(handler);
 
-    if (handlerIndex > 0) {
+    if (handlerIndex > -1) {
       handlers.splice(handlerIndex, 1);
 
       return true;
