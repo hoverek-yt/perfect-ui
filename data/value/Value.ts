@@ -1,7 +1,8 @@
+import { EventMap } from "../../lifecycle/Emitter";
 import { DataHolder } from "../DataHolder";
 
-export abstract class Value<T> extends DataHolder {
-  private _value: T;
+export abstract class Value<T, EM extends EventMap> extends DataHolder<EM> {
+  private _value!: T;
   public set value(value: T) {
     this._value = value;
   }

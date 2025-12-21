@@ -1,7 +1,7 @@
-import { Emitter } from '../lifecycle/Emitter'
+import { Emitter, EventMap } from '../lifecycle/Emitter'
 
-export abstract class DataHolder extends Emitter {
-  private _parent?: DataHolder;
+export abstract class DataHolder<T extends EventMap> extends Emitter<T> {
+  private _parent?: DataHolder<any>;
   public get parent() {
     return this._parent;
   }
