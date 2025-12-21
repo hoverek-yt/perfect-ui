@@ -12,14 +12,14 @@ export class Emitter<EmitterEventHandlerDataMap> {
     }
   }
 
-  public on<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>) {
+  public on<K extends keyof EmitterEventHandlerDataMap>(event: K & string, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>) {
     this.ensureEventArrayExists(event);
 
     this.eventMap.get(event).push(handler);
     return this;
   }
 
-  public off<K extends keyof EmitterEventHandlerDataMap>(event: K, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>): boolean {
+  public off<K extends keyof EmitterEventHandlerDataMap>(event: K & string, handler: EmitterEventHandler<EmitterEventHandlerDataMap[K]>): boolean {
     this.ensureEventArrayExists(event);
 
     const handlers = this.eventMap.get(event);
@@ -34,7 +34,7 @@ export class Emitter<EmitterEventHandlerDataMap> {
     return false;
   }
 
-  public emit<K extends keyof EmitterEventHandlerDataMap>(event: K, data: EmitterEventHandlerDataMap[K]) {
+  public emit<K extends keyof EmitterEventHandlerDataMap>(event: K & string, data: EmitterEventHandlerDataMap[K]) {
     this.ensureEventArrayExists(event);
 
     const handlers = this.eventMap.get(event);
