@@ -1,9 +1,7 @@
 export type EventMap = Record<string | symbol, any>;
 
 export class Emitter<M extends EventMap> {
-  private handlers: {
-    [K in keyof M]?: Set<(data: M[K]) => void>;
-  } = {};
+  private handlers: { [K in keyof M]?: Set<(data: M[K]) => void> } = {};
 
   on<K extends keyof M>(
     event: K,
