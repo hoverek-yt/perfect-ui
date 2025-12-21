@@ -6,4 +6,12 @@ export class Schema<T extends Record<string, Field>> {
   constructor(fields: T) {
     this._fields = fields;
   }
+
+  validate(target: object): boolean {
+    return false;
+  }
+}
+
+export function schema<T extends Record<string, Field>>(fields: T) {
+  return new Schema(fields);
 }
