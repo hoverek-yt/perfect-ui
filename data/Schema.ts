@@ -1,4 +1,4 @@
-import { Field } from "../field/Field";
+import { Field } from "./field/Field";
 
 export class Schema<T extends Record<string, Field>> {
   private _fields: T;
@@ -7,10 +7,8 @@ export class Schema<T extends Record<string, Field>> {
     this._fields = fields;
   }
 
-  validate(target: object): boolean {
-    for (const key in target) {
-
-    }
+  isFullyValid(target: object): boolean {
+    for (const key in target) {}
 
     return false;
   }
