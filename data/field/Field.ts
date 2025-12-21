@@ -1,4 +1,4 @@
 
-export abstract class Field<T> { 
-  abstract validate(data: T): boolean;
+export abstract class Field {
+  abstract validate(data: any): boolean;
 }
