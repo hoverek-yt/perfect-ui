@@ -10,7 +10,7 @@ export class NumberField extends Field {
     Object.apply(this, props);
   }
 
-  override isValid(data: number): boolean {
+  override isValid(data: any): boolean {
     const min = Math.min(...this.range);
     const max = Math.max(...this.range);
 
