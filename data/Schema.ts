@@ -11,13 +11,15 @@ export class Schema<T extends Record<string, Field>> {
     const schemaKeys = new Set(Object.keys(this._fields));
     const targetKeys = new Set(Object.keys(target));
 
-    schemaKeys.forEach(schemaKey => {
+    for (const schemaKey of schemaKeys) {
       if (!targetKeys.has(schemaKey)) {
         return false;
       } else {
-        return this._fields[schemaKey].validate(target[schemaKey]);
+        if (this._fields[schemaKey].validate(target[schemaKey])) {
+          continue;
+        }
       }
-    });
+    }
 
     return true;
   }
