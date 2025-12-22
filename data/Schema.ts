@@ -14,7 +14,7 @@ export class Schema<T extends Record<string, Field>> {
     for (const schemaKey of schemaKeys) {
       if (!targetKeys.has(schemaKey)) return false;
 
-      if (this._fields[schemaKey].validate(target[schemaKey])) continue;
+      if (this._fields[schemaKey].isValid(target[schemaKey])) continue;
       else return false;
     }
 
