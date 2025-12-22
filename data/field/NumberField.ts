@@ -11,7 +11,7 @@ export class NumberField extends Field {
     Object.apply(this, props);
   }
 
-  isValid(data: any): boolean {
+  isValid(data: number): boolean {
     const min = Math.min(...this.range);
     const max = Math.max(...this.range);
 
