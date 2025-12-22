@@ -7,7 +7,7 @@ export class Schema<T extends Record<string, Field>> {
     this._fields = fields;
   }
 
-  validate(target: object): boolean {
+  isValid(target: object): boolean {
     const schemaKeys = new Set(Object.keys(this._fields));
     const targetKeys = new Set(Object.keys(target));
 
@@ -19,6 +19,10 @@ export class Schema<T extends Record<string, Field>> {
     }
 
     return true;
+  }
+
+  new(props: Record<keyof T, any>): object {
+    return null;
   }
 }
 
