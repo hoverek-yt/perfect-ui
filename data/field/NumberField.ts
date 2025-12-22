@@ -12,7 +12,10 @@ export class NumberField extends Field {
   }
 
   validate(data: any): boolean {
-    return typeof data === 'number';
+    const min = Math.max(...this.range);
+    const max = Math.min(...this.range);
+
+    return typeof data === 'number' && (data >= min && data <= max);
   }
 }
 
