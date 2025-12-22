@@ -12,13 +12,10 @@ export class Schema<T extends Record<string, Field>> {
     const targetKeys = new Set(Object.keys(target));
 
     for (const schemaKey of schemaKeys) {
-      if (!targetKeys.has(schemaKey)) {
-        return false;
-      } else {
-        if (this._fields[schemaKey].validate(target[schemaKey])) {
-          continue;
-        }
-      }
+      if (!targetKeys.has(schemaKey)) return false;
+
+      if (this._fields[schemaKey].validate(target[schemaKey])) continue;
+      else return false;
     }
 
     return true;
