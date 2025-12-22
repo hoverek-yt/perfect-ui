@@ -1,9 +1,8 @@
 import { Field } from "./Field";
 
 export class NumberField extends Field {
-  public readonly mode: 'integer' | 'decimal';
-
-  public readonly range: [from: number, to: number];
+  public readonly mode: 'integer' | 'decimal' = 'decimal';
+  public readonly range: [from: number, to: number] = [Number.MIN_VALUE, Number.MAX_VALUE];
 
   constructor(props: Partial<NumberField>) {
     super();
