@@ -1,7 +1,7 @@
 import { Field } from "./Field";
 
 export class NumberField extends Field {
-  public readonly mode: 'integer' | 'decimal' = 'decimal';
+  public readonly mode: 'integer' | 'decimal';
 
   public readonly range: [from: number, to: number];
 
