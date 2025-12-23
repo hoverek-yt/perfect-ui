@@ -7,15 +7,11 @@ export abstract class Component extends HTMLElement {
     super();
 
     this.attachedShadowRoot = this.attachShadow({ mode: 'open' });
-    this.rootStyleSheet = new CSSStyleSheet();
-    this.shadowRoot.adoptedStyleSheets = [this.rootStyleSheet];
-
-    this.rootStyleSheet.insertRule(`
-      :host {}
-    `);
+    this.shadowRoot.adoptedStyleSheets = this.cssStyleSheets();
   }
 
-  abstract render<E extends HTMLElement>(): E;
+  abstract html<E extends HTMLElement>(): E;
+  abstract cssStyleSheets(): CSSStyleSheet[];
 
   on<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions) {
     this.addEventListener(type, listener);
