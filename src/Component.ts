@@ -22,4 +22,7 @@ export class Component extends HTMLElement {
   off<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions) {
     this.removeEventListener(type, listener, options);
   }
+  emit<E extends Event>(event: E): boolean {
+    return this.dispatchEvent(event);
+  }
 }
