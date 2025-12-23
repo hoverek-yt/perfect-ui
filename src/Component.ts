@@ -19,7 +19,6 @@ export class Component extends HTMLElement {
     this.addEventListener(type, listener);
     return this;
   }
-
   off<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions) {
     this.removeEventListener(type, listener, options);
   }
