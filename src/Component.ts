@@ -5,12 +5,13 @@ export abstract class Component extends HTMLElement {
 
   public readonly htmlRootElement: HTMLElement;
 
-  constructor() {
+  constructor(tag: keyof HTMLElementTagNameMap = 'div') {
     super();
+
+    this.htmlRootElement = document.createElement(tag);
 
     this.attachedShadowRoot = this.attachShadow({ mode: 'open' });
     this.attachedShadowRoot.adoptedStyleSheets = this.cssStyleSheets();
-    this.htmlRootElement = this.html();
     this.attachedShadowRoot.appendChild(this.htmlRootElement);
   }
 
