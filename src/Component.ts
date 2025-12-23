@@ -1,5 +1,5 @@
 
-export class Component extends HTMLElement {
+export abstract class Component extends HTMLElement {
   public readonly attachedShadowRoot: ShadowRoot;
   public readonly rootStyleSheet: CSSStyleSheet;
 
