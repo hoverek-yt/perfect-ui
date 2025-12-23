@@ -11,7 +11,7 @@ export abstract class Component extends HTMLElement {
     this.attachedShadowRoot.appendChild(this.html());
   }
 
-  abstract html<E extends HTMLElement>(): E;
+  abstract html(): HTMLElement;
   abstract cssStyleSheets(): CSSStyleSheet[];
 
   on<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions) {
