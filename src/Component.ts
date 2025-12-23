@@ -15,7 +15,7 @@ export abstract class Component extends HTMLElement {
     `);
   }
 
-  abstract html<E extends HTMLElement>(): E;
+  abstract render<E extends HTMLElement>(): E;
 
   on<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions) {
     this.addEventListener(type, listener);
