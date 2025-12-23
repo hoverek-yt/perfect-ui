@@ -8,8 +8,7 @@ export abstract class Component extends HTMLElement {
 
     this.attachedShadowRoot = this.attachShadow({ mode: 'open' });
     this.attachedShadowRoot.adoptedStyleSheets = this.cssStyleSheets();
-
-    this.attachedShadowRoot
+    this.attachedShadowRoot.appendChild(this.html());
   }
 
   abstract html<E extends HTMLElement>(): E;
